@@ -264,7 +264,6 @@
     var autoplayTimer = null;
     var pointerOverCard = false;
     var focusInsideCard = false;
-    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     var AUTOPLAY_DELAY = 4500;
     var TRANSITION_MS = 1200;
 
@@ -310,7 +309,7 @@
     };
     var startAutoplay = function () {
       stopAutoplay();
-      if (pointerOverCard || focusInsideCard || document.hidden || reduceMotion.matches) return;
+      if (pointerOverCard || focusInsideCard || document.hidden) return;
       autoplayTimer = setInterval(function () { go(index + 1); }, AUTOPLAY_DELAY);
     };
     var restartAutoplay = function () {
@@ -344,8 +343,6 @@
     on(nav.querySelector('.owl-next'), 'click', function () { go(index + 1); restartAutoplay(); });
     dots.forEach(function (dot) { on(dot, 'click', restartAutoplay); });
     on(document, 'visibilitychange', function () { document.hidden ? stopAutoplay() : startAutoplay(); });
-    if (reduceMotion.addEventListener) on(reduceMotion, 'change', startAutoplay);
-    else if (reduceMotion.addListener) reduceMotion.addListener(startAutoplay);
 
     layout();
     startAutoplay();
