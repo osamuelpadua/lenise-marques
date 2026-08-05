@@ -1,0 +1,98 @@
+/* Estilos próprios do site estático — carregado por último, depois do CSS do Elementor. */
+
+/* ===== FOOTER ===== */
+/* Mesma estrutura do rodapé do site da Dra. Monique, com o gradiente e a tipografia daqui.
+   O modificador --credit é necessário porque o tema Kadence já usa .site-footer para o
+   seu próprio rodapé (vazio nestas páginas): sem ele, o gradiente pintaria os dois. */
+.site-footer--credit {
+  position: relative;
+  min-height: 70px;
+  background: linear-gradient(109deg, #d9a4aa 0%, #177a7f 100%);
+  overflow: hidden;
+  /* Contém o mix-blend-mode do grão. Sem isso o blend promove a página inteira a
+     camada composta e o Chrome troca o antialiasing subpixel do texto por escala
+     de cinza — todo o texto do site renderiza diferente por causa do rodapé. */
+  isolation: isolate;
+}
+
+.site-footer--credit .site-footer-grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+  opacity: 0.42;
+  pointer-events: none;
+}
+
+.site-footer--credit .site-footer-inner {
+  position: relative;
+  z-index: 1;
+  /* 1140px + 10px de padding: mesma caixa de conteúdo das demais seções */
+  max-width: 1140px;
+  min-height: 70px;
+  margin: 0 auto;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.site-footer--credit .site-footer-copy {
+  margin: 0;
+  font-family: "Montserrat", Sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #ffffff;
+}
+
+.site-footer--credit .site-footer-credit {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.75;
+  transition: opacity 0.25s ease;
+}
+
+.site-footer--credit .site-footer-credit:hover,
+.site-footer--credit .site-footer-credit:focus-visible {
+  opacity: 1;
+}
+
+.site-footer--credit .site-footer-credit-text {
+  font-family: "Montserrat", Sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #ffffffb3;
+  white-space: nowrap;
+}
+
+.site-footer--credit .site-footer-credit-logo {
+  height: 18px;
+  width: auto;
+  display: block;
+}
+
+@media (max-width: 767px) {
+  .site-footer--credit {
+    min-height: unset;
+  }
+
+  .site-footer--credit .site-footer-inner {
+    min-height: unset;
+    padding: 20px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .site-footer--credit .site-footer-credit {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}

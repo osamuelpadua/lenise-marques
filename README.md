@@ -27,13 +27,27 @@ index.html               página inicial
 projetos/                lista de projetos
 apartamento-jp/  apartamento-sb/  casa-ae/
 casa-mp/  pdv-entre-terras/  studio-rp/  suite-filha/
+robots.txt  sitemap.xml
 assets/
   css/fonts.css          Montserrat auto-hospedada (400/500/600/700)
+  css/site.css           estilos próprios (rodapé), carregado por último
   fonts/                 arquivos .woff2 da Montserrat
-  js/site.js             menu, carrosséis e FAQ (única dependência de JS)
+  img/logo-samuel.svg    crédito de autoria no rodapé
+  js/site.js             menu, carrosséis, FAQ e ano do rodapé (única dependência de JS)
   plugins/  themes/  wp-includes/   CSS original do tema e dos plugins
   uploads/               imagens do site
 ```
+
+## SEO
+
+Cada página tem `title` e `description` próprios, `canonical`, Open Graph e Twitter
+Card completos (com imagem absoluta e dimensões declaradas) e JSON-LD. O grafo do
+negócio — `WebSite`, `ProfessionalService` e `Person` — fica na home; as demais
+páginas trazem `Article`/`WebPage` referenciando-o por `@id`.
+
+Ao trocar de domínio, atualizar as URLs absolutas: `canonical`, `og:url`,
+`og:image`, `twitter:image` e os `@id` do JSON-LD nas 9 páginas, mais `robots.txt`
+e `sitemap.xml`.
 
 ## O que mudou em relação ao original
 
@@ -47,6 +61,8 @@ assets/
   `shortlink` e `generator` foram removidos — apontavam para a instalação WP.
 - **Data dos posts**: deixou de linkar para o arquivo por data do WordPress (página
   que não existe no estático) e aponta para o próprio post.
+- **Rodapé**: a barra de copyright perdeu os ícones de redes sociais (já presentes
+  na seção acima) e ganhou o crédito de autoria, no padrão dos demais sites.
 
 ## Manutenção
 

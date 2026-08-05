@@ -371,8 +371,15 @@
     });
   }
 
+  /* ------------------------------------------------------- ano corrente no rodapé */
+  function footerYear() {
+    var el = document.getElementById('footer-year');
+    if (el) el.textContent = new Date().getFullYear();
+  }
+
   /* ------------------------------------------------------------------ arranque */
   function init() {
+    footerYear();
     document.querySelectorAll('.elementor-widget-navigation-menu').forEach(navMenu);
     document.querySelectorAll('.elementor-widget-image-carousel').forEach(imageCarousel);
     document.querySelectorAll('.uc_carousel.owl-carousel').forEach(ucCarousel);
