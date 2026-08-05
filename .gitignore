@@ -1,0 +1,9 @@
+# Cópia original do WordPress (tema, plugins, core e HTML gerado pelo WP).
+# Fica em disco como backup, mas não pertence ao site estático.
+_wordpress-original/
+
+# Sistema operacional / editores
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/

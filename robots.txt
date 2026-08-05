@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://lenisemarquesinteriores.com/sitemap.xml
