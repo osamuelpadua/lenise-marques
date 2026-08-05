@@ -261,6 +261,12 @@
     var index = 0;
     var per = itemsFor();
     var step = 0;
+    var autoplayTimer = null;
+    var pointerOverCard = false;
+    var focusInsideCard = false;
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var AUTOPLAY_DELAY = 4500;
+    var TRANSITION_MS = 1200;
 
     // O owl no site original mede a largura do container Elementor com o padding
     // incluído (20px a mais que a área útil), e é essa medida que define os cards.
@@ -276,7 +282,7 @@
       place(false);
     };
     var place = function (animate) {
-      stage.style.transition = animate ? 'transform 600ms ease' : 'none';
+      stage.style.transition = animate ? 'transform ' + TRANSITION_MS + 'ms cubic-bezier(.4, 0, .2, 1)' : 'none';
       stage.style.transform = 'translateX(' + (-(CLONES + index) * step) + 'px)';
       cells.forEach(function (c, i) {
         var pos = i - CLONES - index;
@@ -297,10 +303,52 @@
         on(stage, 'transitionend', settle);
       }
     };
-    on(nav.querySelector('.owl-prev'), 'click', function () { go(index - 1); });
-    on(nav.querySelector('.owl-next'), 'click', function () { go(index + 1); });
+
+    var stopAutoplay = function () {
+      clearInterval(autoplayTimer);
+      autoplayTimer = null;
+    };
+    var startAutoplay = function () {
+      stopAutoplay();
+      if (pointerOverCard || focusInsideCard || document.hidden || reduceMotion.matches) return;
+      autoplayTimer = setInterval(function () { go(index + 1); }, AUTOPLAY_DELAY);
+    };
+    var restartAutoplay = function () {
+      stopAutoplay();
+      startAutoplay();
+    };
+
+    // O movimento continua em loop e pausa enquanto o ponteiro (ou o foco do
+    // teclado) estiver dentro de qualquer card, inclusive nos cards clonados.
+    cells.forEach(function (cell) {
+      on(cell, 'mouseenter', function () {
+        pointerOverCard = true;
+        stopAutoplay();
+      });
+      on(cell, 'mouseleave', function () {
+        pointerOverCard = false;
+        startAutoplay();
+      });
+      on(cell, 'focusin', function () {
+        focusInsideCard = true;
+        stopAutoplay();
+      });
+      on(cell, 'focusout', function (event) {
+        if (cell.contains(event.relatedTarget)) return;
+        focusInsideCard = false;
+        startAutoplay();
+      });
+    });
+
+    on(nav.querySelector('.owl-prev'), 'click', function () { go(index - 1); restartAutoplay(); });
+    on(nav.querySelector('.owl-next'), 'click', function () { go(index + 1); restartAutoplay(); });
+    dots.forEach(function (dot) { on(dot, 'click', restartAutoplay); });
+    on(document, 'visibilitychange', function () { document.hidden ? stopAutoplay() : startAutoplay(); });
+    if (reduceMotion.addEventListener) on(reduceMotion, 'change', startAutoplay);
+    else if (reduceMotion.addListener) reduceMotion.addListener(startAutoplay);
 
     layout();
+    startAutoplay();
     on(window, 'resize', debounce(layout, 150));
   }
 
