@@ -53,8 +53,8 @@ e `sitemap.xml`.
 
 - **JavaScript**: jQuery, Elementor, Swiper, Owl Carousel e Essential Addons
   (≈1,2 MB) foram substituídos por `assets/js/site.js`, que reimplementa só o que
-  estas páginas usam: menu mobile, carrossel de depoimentos, carrossel de projetos
-  e o accordion do FAQ.
+  estas páginas usam: menu mobile, carrossel de depoimentos, carrossel de projetos,
+  botões de compartilhamento e o accordion do FAQ.
 - **Fontes**: o WordPress pedia ao Google Fonts três famílias × 18 variantes cada.
   Apenas Montserrat é de fato aplicada; ela agora é servida do próprio site.
 - **Tags do WordPress**: feeds RSS, oEmbed, `api.w.org`, `xmlrpc`, `canonical`,

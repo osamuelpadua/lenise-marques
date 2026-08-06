@@ -2,7 +2,8 @@
  * Interatividade do site estático — substitui jQuery, Elementor, Swiper, Owl e
  * Essential Addons (≈1,2 MB de JS) pelo mínimo que estas páginas realmente usam:
  * menu mobile do Header Footer Elementor, carrossel de depoimentos (image-carousel),
- * carrossel de projetos (unlimited-elements/owl) e o accordion do FAQ.
+ * carrossel de projetos (unlimited-elements/owl), compartilhamento e o accordion
+ * do FAQ.
  *
  * As classes e a estrutura de DOM replicam o que os scripts originais geravam, para
  * que o CSS do tema e dos plugins continue valendo sem alteração.
@@ -745,9 +746,41 @@
     if (el) el.textContent = new Date().getFullYear();
   }
 
+  /* ------------------------------------------ compartilhamento dos projetos */
+  function shareButtons() {
+    var canonical = document.querySelector('link[rel="canonical"]');
+    var pageUrl = canonical ? canonical.href : window.location.href;
+    var pageTitle = document.title;
+    var encodedUrl = encodeURIComponent(pageUrl);
+    var encodedTitle = encodeURIComponent(pageTitle);
+    var urls = {
+      facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + encodedUrl,
+      twitter: 'https://twitter.com/intent/tweet?url=' + encodedUrl + '&text=' + encodedTitle,
+      linkedin: 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodedUrl
+    };
+
+    Object.keys(urls).forEach(function (network) {
+      var button = document.querySelector('.elementor-share-btn_' + network);
+      if (!button) return;
+
+      var openShareDialog = function () {
+        window.open(urls[network], '_blank', 'noopener,noreferrer,width=720,height=640');
+      };
+
+      on(button, 'click', openShareDialog);
+      on(button, 'keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') event.preventDefault();
+      });
+      on(button, 'keyup', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') openShareDialog();
+      });
+    });
+  }
+
   /* ------------------------------------------------------------------ arranque */
   function init() {
     footerYear();
+    shareButtons();
     document.querySelectorAll('.elementor-widget-navigation-menu').forEach(navMenu);
     document.querySelectorAll('.elementor-widget-image-carousel').forEach(imageCarousel);
     document.querySelectorAll('.lenise-reviews-carousel').forEach(reviewsCarousel);
