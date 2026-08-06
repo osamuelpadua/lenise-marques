@@ -25,6 +25,7 @@
   .elementor-element.elementor-element-7b0d48c .hfe-nav-menu__layout-horizontal .menu-item > a.hfe-menu-item {
     padding-right: 0 !important;
     padding-left: 0 !important;
+    white-space: nowrap;
   }
 }
 
